@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+ 
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script>
+        window.onload = function () {
+ 
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                title: {
+                    text: "Temperature"
+                },
+                axisX: {
+                    valueFormatString: "DD MMM"
+                },
+                axisY: {
+                    title: "Temperature in celsius ",
+                    valueFormatString: "#,##0.##",
+                    suffix: "°"
+                },
+                data: [{
+                    type: "spline",
+                    xValueType: "dateTime",
+                    xValueFormatString: "DD MMM",
+                    yValueFormatString: "#,###.##",					
+                    dataPoints: @Html.Raw(ViewBag.DataPoints)
+                }]
+            });
+            chart.render();
+ 
+        }
+    </script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>	
+</body>
+</html> 
