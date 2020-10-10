@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
-using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography;
 using System.Web.Mvc;
 using MySql.Data.MySqlClient;
 using MySqlTestApplication.Models;
@@ -27,13 +26,12 @@ namespace MySqlTestApplication.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Carbondioxide()
         {
             try
             {
-                SplineChart();
-                //var val = MySqlConnectionTest();
-                //ViewBag.Message = val;
+                string query = "SELECT * FROM carbondioxide";
+                SplineChart(query, "Carbondioxide");
             }
             catch (Exception e)
             {
@@ -45,19 +43,62 @@ namespace MySqlTestApplication.Controllers
             return View();
         }
 
-        private void SplineChart()
+        public ActionResult Humidity()
         {
-            DataTable dt = MySqlConnectionTest();
+            try
+            {
+                string query = "SELECT * FROM humidity";
+                SplineChart(query, "Humidity");
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "nope";
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return View();
+        }
+
+        public ActionResult Temperature(string button)
+        {
+            try
+            {
+                string query = string.Empty;
+                if (button == "buttonSearch")
+                {
+                    query = "SELECT * FROM temperature WHERE MeasuredDateTime between '2020-09-29 10:44:00' and '2020-09-29 11:00:50' ";
+                }
+                else
+                {
+                    query = "SELECT * FROM temperature";
+
+                }
+                SplineChart(query, "Temperature");
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "nope";
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return View();
+        }
+
+        private void SplineChart(string query, string attributeName)
+        {
+            DataTable dt = MySqlConnectionTest(query);
             List<DataPoint> dataPoints = new List<DataPoint>();
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                dataPoints.Add(new DataPoint( dt.Rows[i]["MeasuredDateTime"].ToString(), (decimal)dt.Rows[i]["Temperature"]));
+                dataPoints.Add(new DataPoint( dt.Rows[i]["MeasuredDateTime"].ToString(), (decimal)dt.Rows[i][attributeName]));
             }
 
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
         }
 
-        private DataTable MySqlConnectionTest()
+        private DataTable MySqlConnectionTest(string query)
         {
             string connection = "SERVER= 127.0.0.1;PORT=3306;DATABASE=air_live;UID=root;PASSWORD=juventus";
             DataTable dataTable = new DataTable();
@@ -67,8 +108,6 @@ namespace MySqlTestApplication.Controllers
                 mySqlConnection = new MySqlConnection();
                 mySqlConnection.ConnectionString = connection;
                 mySqlConnection.Open();
-
-                string query = "SELECT * FROM temperature";
 
                 MySqlCommand cmd = new MySqlCommand(query, mySqlConnection);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
