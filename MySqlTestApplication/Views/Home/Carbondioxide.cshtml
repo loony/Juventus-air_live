@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Carbon Dioxide";
+}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script>
+        window.onload = function () {
+
+            var chart = new CanvasJS.Chart("chartContainerCarbonDioxide", {
+                animationEnabled: true,
+                title: {
+                    text: "Carbon dioxide"
+                },
+                axisX: {
+                    valueFormatString: "DD MMM"
+                },
+                axisY: {
+                    title: "Atmospheric CO2",
+                    valueFormatString: "#,##0.##"
+                },
+                data: [{
+                    type: "spline",
+                    xValueType: "dateTime",
+                    xValueFormatString: "DD MMM",
+                    yValueFormatString: "#,###.##",
+                    dataPoints: @Html.Raw(ViewBag.DataPoints)
+                }]
+            });
+            chart.render();
+
+        }
+    </script>
+</head>
+<body>
+    <div id="chartContainerCarbonDioxide" class="default-chart"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+</html> 
