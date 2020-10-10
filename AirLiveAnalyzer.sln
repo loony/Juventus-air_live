@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirLiveAnalyzerWeb", "MySqlTestApplication\AirLiveAnalyzerWeb.csproj", "{B2F85715-3103-4D80-8270-E746BFEE4AC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySQLAirLiveAnalzer", "MySQLAirLiveAnalzer\MySQLAirLiveAnalzer.csproj", "{F29C2856-5F84-40B2-B1B5-451C3D10A790}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirLiveAnalyzerMySQL", "MySQLAirLiveAnalzer\AirLiveAnalyzerMySQL.csproj", "{F29C2856-5F84-40B2-B1B5-451C3D10A790}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
