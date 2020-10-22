@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Security.Cryptography;
 using System.Web.Mvc;
 using MySql.Data.MySqlClient;
 using MySqlTestApplication.Models;
